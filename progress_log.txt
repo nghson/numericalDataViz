@@ -1,0 +1,7 @@
+Wed 16.3 progress:
+    - Tried using scalafx to create lines for line diagram.
+    - Scalafx's methods to create Line objects and add them to a scene have been tested.
+    - No errors so far.
+    - Due to a change in my schedule, I started the project a bit late so little has been done. The work load is approximately 10 hours.
+    - Right now I'm a bit lagging behind compared to the plan, but I expect to spend more time now to catch up.
+
