@@ -1,19 +1,16 @@
 package DataViz
 
-import scalafx.Includes._
-import scalafx.application.JFXApp
-import scalafx.scene.Scene
-import scalafx.scene.layout.Pane
-import scalafx.scene.shape.Line
+import io.circe.generic.auto._, io.circe.syntax._, io.circe.parser.decode
 
-class Data(val graphType: String, val config: Option[Map[String, String]]) {
+class Data(val graphType: String, val config: Option[Map[String, String]]=None) { //val config: Option[Map[String, String]]) {
 
 
 }
 
+
 class LineData(val data: Array[Array[Point]],
-               graphType: String,
-               config: Option[Map[String, String]]=None) extends Data(graphType, config) {
+               val graphType: String,
+               val config: Option[Map[String, String]]=None) {
 
   val xRange: (Double, Double) = {
     val arr = this.data.flatten.map(_.x)
@@ -25,4 +22,24 @@ class LineData(val data: Array[Array[Point]],
     (arr.min, arr.max)
   }
 
+}
+
+object Data {
+  def loadData(file: String): Option[LineData] = {
+    val fileSource = util.Try(scala.io.Source.fromFile(file))
+
+
+    def readText(source: scala.io.Source ) = source.getLines().mkString("\n")
+
+    for (source <- fileSource) {
+      val text = readText(source)
+      (decode[LineData](text)) match {
+        case Right(data) => return Some(data)
+        case Left(_) => return None
+      }
+    }
+
+    None
+
+  }
 }
