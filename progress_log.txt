@@ -7,3 +7,10 @@ Wed 16.3 progress:
 
 Wed 30.3 progress:
 	- Unfortunately, no progress was made to the project. I will try to catch up to the plan quickly.
+
+Wed 13.4 progress:
+	- Classes Point, Data and LineData have been implemented
+	- Method loadData of LineData has been tested and would work if LineData is not a subclass of Data
+	- Some difficulty with Circe for reading JSON file was encountered
+	- Due to the exam week, I could not invest  a lot of time for the project so it is still behind schedule, hopefully I can catch up and finish by the deadline.
+
