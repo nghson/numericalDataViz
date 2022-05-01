@@ -32,7 +32,7 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
     val arr = scala.collection.mutable.ArrayBuffer[Array[Point]]()
     val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
 
-    val y = get_x_axis(0).y // y and yLenght are already scaled
+    val y = get_x_axis(0).y // y and yLength are already scaled
     val yLength = { // length of the mark
       if (y == 0) y + 5
       else y - 5
@@ -96,13 +96,13 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
     val arr = scala.collection.mutable.ArrayBuffer[Array[Point]]()
     val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
 
-    val x = get_y_axis(0).x // y and yLenght are already scaled
+    val x = get_y_axis(0).x // x and xLength are already scaled
     val xLength = { // length of the mark
       if (x == width) x - 5
       else x + 5
     }
     val xLabel = { // x position for the mark labels
-      if (x == width) x - 8
+      if (x == width) x - 30
       else x + 8
     }
 
@@ -150,7 +150,7 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
       }
     } else { // plotting a horizontal line or a point
       arr += Array(new Point(x, height/2), new Point(xLength, height/2))
-      arr2 += Array(data.xRange._2, xLabel, height/2)
+      arr2 += Array(data.yRange._2, xLabel, height/2)
     }
 
     (arr.toArray, arr2.toArray)
