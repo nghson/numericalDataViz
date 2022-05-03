@@ -97,7 +97,7 @@ object Axis {
       else x + 5
     }
     val xLabel = { // x position for the mark labels
-      if (x >= width - 50) x - 20
+      if (x >= width - 50) x - 25
       else x + 8
     }
 
