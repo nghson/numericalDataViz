@@ -82,14 +82,11 @@ object Chart {
   }
 
   def make_legend(data: LineData, colors: Array[Color]): VBox = {
-    // legend
-    val legend = new Legend
-    // legend
-    for (i <- 0 until data.data.length) {
-      legend.add_legend(colors(i), data.data(i))
+    val legends = scala.collection.mutable.ArrayBuffer[(Color, Array[Point])]()
+    for (i <- data.data.indices) {
+      legends += ((colors(i), data.data(i)))
     }
     val vBox = new VBox(20)
-    val legends = legend.get_legend
     vBox.children = legends.map(l => {
       val col = l._1
       val data = l._2
