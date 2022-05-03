@@ -2,10 +2,10 @@ package DataViz
 
 import math._
 
-class Axis(val data: LineData, val width: Double, val height: Double) {
+object Axis {
 
   // return axis as two points
-  def get_x_axis: Array[Point] = {
+  def get_x_axis(data: LineData, width: Double, height: Double): Array[Point] = {
     if (data.yRange._1 >= 0) {
       Array(new Point(0, height), new Point(width, height))
     } else if (data.yRange._2 < 0) {
@@ -16,7 +16,7 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
     }
   }
 
-  def get_y_axis: Array[Point] = {
+  def get_y_axis(data: LineData, width: Double, height: Double): Array[Point] = {
     if (data.xRange._1 >= 0) {
       Array(new Point(0, 0), new Point(0, height))
     } else if (data.xRange._2 < 0) {
@@ -28,11 +28,11 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
   }
 
   // return the marks on axis
-  def get_x_marks: (Array[Array[Point]], Array[Array[Double]]) = {
+  def get_x_marks(data: LineData, width: Double, height: Double, y: Double): (Array[Array[Point]], Array[Array[Double]]) = {
     val arr = scala.collection.mutable.ArrayBuffer[Array[Point]]()
     val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
 
-    val y = get_x_axis(0).y // y and yLength are already scaled
+    //val y = get_x_axis(0).y // y and yLength are already scaled
     val yLength = { // length of the mark
       if (y == 0) y + 5
       else y - 5
@@ -92,11 +92,11 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
     (arr.toArray, arr2.toArray)
   }
 
-  def get_y_marks: (Array[Array[Point]], Array[Array[Double]]) = {
+  def get_y_marks(data: LineData, width: Double, height: Double, x: Double): (Array[Array[Point]], Array[Array[Double]]) = {
     val arr = scala.collection.mutable.ArrayBuffer[Array[Point]]()
     val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
 
-    val x = get_y_axis(0).x // x and xLength are already scaled
+    //val x = get_y_axis(0).x // x and xLength are already scaled
     val xLength = { // length of the mark
       if (x == width) x - 5
       else x + 5
@@ -139,7 +139,7 @@ class Axis(val data: LineData, val width: Double, val height: Double) {
             Array(current, xLabel, (-current + data.yRange._2) * scaleY)
           current += unit
         }
-        current = 0
+        current = -unit
         while (current >= data.yRange._1) {
           arr +=
             Array(new Point(x, (-current + data.yRange._2) * scaleY), new Point(xLength, (-current + data.yRange._2) * scaleY))
