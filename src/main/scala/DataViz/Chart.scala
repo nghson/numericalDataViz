@@ -1,13 +1,10 @@
 package DataViz
 
-import scalafx.application._
 import scalafx.Includes._
-import scalafx.scene._
 import scalafx.scene.shape._
 import scalafx.scene.paint.Color
 import scalafx.scene.layout._
 import scalafx.scene.control._
-import scalafx.event.ActionEvent
 import scalafx.scene.canvas._
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label.sfxLabel2jfx

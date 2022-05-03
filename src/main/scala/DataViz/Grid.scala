@@ -25,7 +25,7 @@ object Grid {
     val scaleY = height / dimensions._2
     val scaledSize = size * scaleY
     var current = y + scaledSize
-    while (current <= dimensions._2) {
+    while (current <= height) {
       arr += Array(new Point(0, current), new Point(width, current))
       current += scaledSize
     }
