@@ -10,18 +10,21 @@ import scalafx.scene.control._
 import scalafx.event.ActionEvent
 import scalafx.scene.canvas._
 import scalafx.geometry.Pos._
-import math.abs
+import scalafx.scene.control.Label.sfxLabel2jfx
+
 
 object Chart {
 
   def fmt(n: Double): String = {
-    if (n == 0 || abs(n) > 1) n.toInt.toString
-    else n.toString
+    if (n.isValidInt) n.toInt.toString
+    else ((f"$n%1.1f"))
   }
 
-  def make_line_chart(data: LineData, w: Double, h: Double, colors: Array[Color]): Canvas = {
+  def make_line_chart(data: LineData, w: Double, h: Double, colors: Array[Color], config: Map[String, String]): Pane = {
     val canvas = new Canvas(w, h)
     val gt = canvas.graphicsContext2D
+    val pane = new Pane
+    pane.children += canvas
 
     // axes
     val xAxis = Axis.get_x_axis(data, w, h)
@@ -30,8 +33,7 @@ object Chart {
     val (yMarks, yMarkLabels) = Axis.get_y_marks(data, w, h, yAxis(0).x)
 
     gt.setStroke(Color.Black)
-    gt.lineWidth = 1.0
-    //gt.fill = Color.Black
+    gt.lineWidth = 0.6
 
     gt.strokeLine(xAxis(0).x, xAxis(0).y, xAxis(1).x, xAxis(1).y)
     xMarks.foreach(line => gt.strokeLine(line(0).x, line(0).y, line(1).x, line(1).y))
@@ -51,34 +53,50 @@ object Chart {
     })
     //yMarkLabels.foreach(label => println(label(0), label(1), label(2)))
 
+    // axes name
+    if (config.contains("y")) {
+      val label = new Label(config("y"))
+      label.layoutX = yAxis(0).x
+      label.layoutY = 10
+      canvas.layoutY = 40
+      pane.children += label
+    }
+    if (config.contains("x")) {
+      val label = new Label(config("x"))
+      label.layoutX = w + 20
+      label.layoutY = xAxis(0).y + 40
+      pane.children += label
+    }
+
     // plot
     gt.lineWidth = 2.5
     var i = 0
-
     data.get_transformed_data(w, h).foreach(line => {
       val start = line(0)
       val end = line(1)
-
-      //println(s"(${start.x}, ${start.y}), (${end.x}, ${end.y})")
-
-      gt.setStroke(colors(i))
+      gt.setStroke(colors(i%colors.length))
       gt.strokeLine(start.x, start.y, end.x, end.y)
       i += 1
     })
 
     // grid
-    val grid = new Grid(10, w, h, data)
-    val gridV = grid.verticals
-    val gridH = grid.horizontals
+    if (config.contains("grid")) {
+      val gridSize = util.Try(config("grid").toDouble)
+      for (size <- gridSize) {
+        if (size > 0) {
+          val gridV = Grid.verticals(size, w, h, data, yAxis(0).x)
+          val gridH = Grid.horizontals(size, w, h, data, xAxis(0).y)
 
-    gt.lineWidth = 0.5
-    gt.setStroke(Color.Gray)
-    gt.setLineDashes(5)
-    gridV.foreach(line => gt.strokeLine(line(0).x, line(0).y, line(1).x, line(1).y))
-    gridH.foreach(line => gt.strokeLine(line(0).x, line(0).y, line(1).x, line(1).y))
-    //gridV.foreach(line => println(line(0).x, line(0).y, line(1).x, line(1).y))
+          gt.lineWidth = 0.5
+          gt.setStroke(Color.Gray)
+          gt.setLineDashes(5)
+          gridV.foreach(line => gt.strokeLine(line(0).x, line(0).y, line(1).x, line(1).y))
+          gridH.foreach(line => gt.strokeLine(line(0).x, line(0).y, line(1).x, line(1).y))
+        }
+      }
+    }
 
-    canvas
+    pane
   }
 
   def make_legend(data: LineData, colors: Array[Color]): VBox = {
@@ -91,10 +109,11 @@ object Chart {
       val col = l._1
       val data = l._2
       val hBox = new HBox(10)
-      val line = Line(10, 5, 30, 5)
+      val line = Line(10, 5, 20, 5)
       line.stroke = col
       val label = new Label(s"${data(0)}, ${data(1)}")
       hBox.children = List(line, label)
+      hBox.alignment = CenterLeft
       hBox
     })
     vBox.alignment = Center
