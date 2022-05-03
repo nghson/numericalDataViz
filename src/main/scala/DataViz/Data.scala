@@ -1,10 +1,7 @@
 package DataViz
 
 import math.{pow, sqrt, floor, log10, abs}
-import io.circe.Decoder
 import io.circe.generic.auto._
-import io.circe._
-import io.circe.generic.semiauto._
 import io.circe.parser.decode
 
 abstract class Data(graphType: String, config: Option[Map[String, String]]=None) {
@@ -12,8 +9,7 @@ abstract class Data(graphType: String, config: Option[Map[String, String]]=None)
 }
 
 case class LineData(val data: Array[Array[Point]],
-                    val graphType: String = "line",
-                    val config: Option[Map[String, String]]=None) extends Data(graphType, config) {
+                    val config: Option[Map[String, String]]=None) extends Data("line", config) {
 
   val xRange: (Double, Double) = {
     val arr = this.data.flatten.map(_.x)

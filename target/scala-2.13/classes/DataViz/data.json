@@ -4,10 +4,9 @@
 		[{"x":-50, "y":-9.89}, {"x":-50, "y":-15}],
 		[{"x":-11, "y":13.56}, {"x":-79, "y":33.5}]
 	],
-	"graphType": "line",
 	"config": {
-		"name": "Graph A",
-		"grid": "25",
+		"name": "Line Chart by Son Nguyen",
+		"grid": "abc",
 		"x" : "x",
 		"y" : "y"
 	}
