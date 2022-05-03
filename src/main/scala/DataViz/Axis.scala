@@ -32,7 +32,6 @@ object Axis {
     val arr = scala.collection.mutable.ArrayBuffer[Array[Point]]()
     val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
 
-    //val y = get_x_axis(0).y // y and yLength are already scaled
     val yLength = { // length of the mark
       if (y == 0) y + 5
       else y - 5
@@ -47,7 +46,7 @@ object Axis {
     if (data.dimensions._1 <= unit * 2) unit = unit/4
     else if (data.dimensions._1 <= unit * 5) unit = unit/2
 
-    var current = 0.0
+    var current = unit
     if (data.xRange._1 >= 0) {
       while (current <= data.xRange._2) {
         if (current >= data.xRange._1) {
@@ -76,7 +75,7 @@ object Axis {
           Array(current, (current - data.xRange._1) * scaleX, yLabel)
         current += unit
       }
-      current = 0
+      current = -unit
       while (current >= data.xRange._1) {
         arr +=
           Array(new Point((current - data.xRange._1) * scaleX, y), new Point((current - data.xRange._1) * scaleX, yLength))
@@ -93,13 +92,12 @@ object Axis {
     val arr = scala.collection.mutable.ArrayBuffer[Array[Point]]()
     val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
 
-    //val x = get_y_axis(0).x // x and xLength are already scaled
     val xLength = { // length of the mark
       if (x == width) x - 5
       else x + 5
     }
     val xLabel = { // x position for the mark labels
-      if (x == width) x - 30
+      if (x >= width - 50) x - 20
       else x + 8
     }
 
@@ -108,7 +106,7 @@ object Axis {
     if (data.dimensions._2 <= unit * 2) unit = unit/4
     else if (data.dimensions._2 <= unit * 5) unit = unit/2
 
-    var current = 0.0
+    var current = unit
     if (data.yRange._1 >= 0) {
       while (current <= data.yRange._2) {
         if (current >= data.yRange._1) {
