@@ -77,6 +77,8 @@ object Axis {
 
   /** Calculate the positions of the marks on y-axis.
    *  @param x the x-coordinate of the y-axis.
+   *  @return an array of coordinates of small lines for markings
+   *          and an array of coordinates for number labels
    */
   def get_y_marks(data: LineData, width: Double, height: Double, x: Double): (Array[Array[Point]], Array[Array[Double]]) = {
     // coordinates of the marks so we need two points
@@ -118,6 +120,32 @@ object Axis {
           Array(current, xLabel, (-current + data.yRange._2) * scaleY)
       }
       current -= unit
+    }
+
+    (arr.toArray, arr2.toArray)
+  }
+
+  /** Calculate positions of marks for a histogram chart.
+   *  @return an array of y-coordinates for marks
+   *          and an array of labels and y-coordinates for number labels.
+   */
+  def get_hist_marks(data: HistogramData, width: Double, height: Double): (Array[Double], Array[Array[Double]]) = {
+    val arr = scala.collection.mutable.ArrayBuffer[Double]()
+    val arr2 = scala.collection.mutable.ArrayBuffer[Array[Double]]()
+
+    val scaleY = height / data.dimension
+    var unit = pow(10, floor(log10(data.dimension)))
+    if (data.dimension <= unit * 2) unit = unit/4
+    else if (data.dimension <= unit * 5) unit = unit/2
+    else if (data.dimension >= unit * 7) unit = unit * 2
+
+    var current = unit
+    while (current <= data.yRange._2) {
+      if (current >= data.yRange._1) {
+        arr += (data.yRange._2 - current) * scaleY
+        arr2 += Array(current, (data.yRange._2 - current) * scaleY)
+      }
+      current += unit
     }
 
     (arr.toArray, arr2.toArray)
