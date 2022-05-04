@@ -41,7 +41,6 @@ object Chart {
       if (label(0) != 0)
         gt.fillText(fmt(label(0)), label(1), label(2))
     })
-    //xMarkLabels.foreach(label => println(label(0), label(1), label(2)))
 
     gt.strokeLine(yAxis(0).x, yAxis(0).y, yAxis(1).x, yAxis(1).y)
     yMarks.foreach(line => gt.strokeLine(line(0).x, line(0).y, line(1).x, line(1).y))
@@ -50,7 +49,6 @@ object Chart {
       if (label(0) != 0)
         gt.fillText(fmt(label(0)), label(1), label(2))
     })
-    //yMarkLabels.foreach(label => println(label(0), label(1), label(2)))
 
     // axes name
     if (config.contains("y")) {
@@ -100,7 +98,7 @@ object Chart {
   def make_legend(data: LineData, colors: Array[Color]): VBox = {
     val legends = scala.collection.mutable.ArrayBuffer[(Color, Array[Point])]()
     for (i <- data.data.indices) {
-      legends += ((colors(i), data.data(i)))
+      legends += ((colors(i%colors.length), data.data(i)))
     }
     val vBox = new VBox(20)
     vBox.children = legends.map(l => {
@@ -213,7 +211,6 @@ object Chart {
     legend.alignment = Center
     hBox.children += chart
     hBox.children += legend
-    //hBox.alignment = Center
     hBox
   }
 
