@@ -1,11 +1,11 @@
 {
   "data": {
-    "BMW": 10,
-    "Toyota": 20.9,
-    "Ford": 39,
-    "Audi": 34.19,
-    "Volkswagen": 55.1,
-    "Kia": 99
+    "BMW": 50,
+    "Toyota": 0,
+    "Ford": 49.99,
+    "Audi": 0,
+    "Volkswagen": -10,
+    "Kia": 0
   },
   "config": {
     "name": "Histogram Chart",

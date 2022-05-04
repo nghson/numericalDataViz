@@ -71,6 +71,10 @@ case class HistogramData(val data: Map[String, Double],
 
 }
 
+case class PieData(val pieData: Map[String, Double],  val config: Option[Map[String, String]]=None) {
+
+}
+
 object Data {
 
   def load_data(file: String): Option[LineData] = {
@@ -97,6 +101,22 @@ object Data {
     for (source <- fileSource) {
       val text = read_text(source)
       (decode[HistogramData](text)) match {
+        case Right(data) => return Some(data)
+        case Left(_) =>  return None
+      }
+    }
+
+    None
+  }
+
+  def load_data_pie(file: String): Option[PieData] = {
+    val fileSource = util.Try(scala.io.Source.fromFile(file))
+
+    def read_text(source: scala.io.Source) = source.getLines().mkString("\n")
+
+    for (source <- fileSource) {
+      val text = read_text(source)
+      (decode[PieData](text)) match {
         case Right(data) => return Some(data)
         case Left(_) =>  return None
       }

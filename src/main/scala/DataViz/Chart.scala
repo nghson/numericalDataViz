@@ -174,4 +174,46 @@ object Chart {
     pane
   }
 
+  def make_pie_chart(data: PieData, width: Double, height: Double) = {
+    val hBox = new HBox(30)
+    val chart = new Pane
+    val legend = new VBox(20)
+    val colors = Array(Blue, Red, Green, Yellow, Coral, Teal, Aqua, Brown, Azure, Violet, Navy, Cyan)
+    val total = data.pieData.values.toArray.sum
+    // total = 0 make label says so
+
+    val centerX = width/2.8
+    val centerY = height/2
+    val radius = width/3.5
+    var current = 0.0
+    var i = 0
+
+    // plot
+    data.pieData.foreach(p => {
+      val arcLength = p._2 / total * 360
+      val arc = Arc(centerX, centerY, radius, radius, current, arcLength)
+      val color = colors(i%colors.length)
+      arc.setFill(color)
+      arc.setType(ArcType.Round)
+      chart.children += arc
+      current += arcLength
+      i += 1
+
+      // legend
+      val hBox = new HBox(10)
+      val rect = Rectangle(10, 10, color)
+      val label = new Label(p._1)
+      val numberLabel = new Label(fmt(p._2))
+      hBox.children = List(rect, label, numberLabel)
+      hBox.alignment = CenterLeft
+      legend.children += hBox
+    })
+
+    legend.alignment = Center
+    hBox.children += chart
+    hBox.children += legend
+    //hBox.alignment = Center
+    hBox
+  }
+
 }
