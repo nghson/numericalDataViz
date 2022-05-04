@@ -179,8 +179,9 @@ object Chart {
     val chart = new Pane
     val legend = new VBox(20)
     val colors = Array(Blue, Red, Green, Yellow, Coral, Teal, Aqua, Brown, Azure, Violet, Navy, Cyan)
-    val total = data.pieData.values.toArray.sum
-    // total = 0 make label says so
+    var total = data.pieData.values.toArray.sum
+    // total = 0 make => change it to avoid 0 division, result should be the same
+    if (total == 0) total = 1
 
     val centerX = width/2.8
     val centerY = height/2

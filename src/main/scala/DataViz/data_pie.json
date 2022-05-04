@@ -1,9 +1,9 @@
 {
   "pieData": {
-    "New York": 999,
-    "Helsinki": 999,
-    "Paris": 999,
-    "Berlin": 999
+    "New York": 0,
+    "Helsinki": 0,
+    "Paris": 0,
+    "Berlin": 0
   },
   "config": {
     "name": "Pie Chart"
