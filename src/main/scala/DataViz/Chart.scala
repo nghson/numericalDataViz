@@ -149,7 +149,7 @@ object Chart {
       label.layoutY = y + yShift
       label.layoutX = xShift/2
     })
-    if (config.contains("y")) {
+    if (config.contains("y")) { // axis name
       val label = new Label(config("y"))
       label.layoutX = xShift
       label.layoutY = yShift/2

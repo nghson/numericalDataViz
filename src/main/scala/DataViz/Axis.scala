@@ -48,7 +48,7 @@ object Axis {
     val scaleX = width / data.dimensions._1
     var unit = pow(10, floor(log10(data.dimensions._1)))
     if (data.dimensions._1 <= unit * 2) unit = unit/4
-    else if (data.dimensions._1 <= unit * 5) unit = unit/2
+    else if (data.dimensions._1 < unit * 5) unit = unit/2
     else if (data.dimensions._1 >= unit * 7) unit = unit*2
 
     var current = unit
@@ -98,7 +98,7 @@ object Axis {
     val scaleY = height / data.dimensions._2
     var unit = pow(10, floor(log10(data.dimensions._2)))
     if (data.dimensions._2 <= unit * 2) unit = unit/4
-    else if (data.dimensions._2 <= unit * 5) unit = unit/2
+    else if (data.dimensions._2 < unit * 5) unit = unit/2
     else if (data.dimensions._2 >= unit * 7) unit = unit * 2
 
     var current = unit

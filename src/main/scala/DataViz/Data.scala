@@ -14,8 +14,10 @@ case class LineData(val data: Array[Array[Point]],
     val unit = {
       if (arr.min != arr.max)
         pow(10, floor(log10(arr.max - arr.min))) / 4
-      else
+      else if (arr.min != 0)
         abs(arr.min)/4
+      else
+        10
     }
     (arr.min - unit, arr.max + unit)
   }
@@ -26,8 +28,10 @@ case class LineData(val data: Array[Array[Point]],
     val unit = {
       if (arr.min != arr.max)
         pow(10, floor(log10(arr.max - arr.min))) / 4
-      else
+      else if (arr.min != 0)
         abs(arr.min)/4
+      else
+        10
     }
     (arr.min - unit, arr.max + unit)
   }
@@ -55,26 +59,15 @@ case class HistogramData(val data: Map[String, Double],
     val arr = this.data.values.toArray
     // padding
     val unit = {
-      if (arr.min != arr.max)
+      if (arr.max != 0)
         pow(10, floor(log10(arr.max - arr.min))) / 4
       else
-        abs(arr.min)/4
+        10
     }
-    (arr.min - unit, arr.max + unit)
+    (0, arr.max + unit)
   }
 
   val dimension = yRange._2 - yRange._1
-
-  //def get_transformed_data(width: Double, height: Double): Array[Array[Point]] = {
-
-  //  val scaleX = width/dimensions._1
-  //  val scaleY = height/dimensions._2
-
-  //  this.data.map(line => {
-  //    line.map(p => new Point((p.x - this.xRange._1) * scaleX, (this.yRange._2 - p.y) * scaleY))
-  //  })
-
-  //}
 
 }
 

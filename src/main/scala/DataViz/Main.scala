@@ -11,7 +11,8 @@ object Main {
 
 
   def main(args: Array[String]): Unit = {
-    val filename = "src/main/scala/DataViz/data_hist.json"
+    val filename = "src/main/scala/DataViz/data.json"
+    //val filename = "src/main/scala/DataViz/data_hist.json"
 
 
     def line(data: LineData) = {
